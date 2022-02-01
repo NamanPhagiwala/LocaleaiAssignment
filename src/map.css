@@ -22,11 +22,11 @@
         transform:none !important;
          top: 15%;
         left: 10px;
-        
+        border-color: grey;
     }
     .mapboxgl-popup-content{
-        max-width: 100%;
-        min-width: 100%
+        max-width: 60%;
+        font-size: 25px;
     }
     .mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
     .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,

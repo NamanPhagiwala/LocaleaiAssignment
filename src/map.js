@@ -77,20 +77,24 @@ class Map extends Component {
         }
     }
     console.log(this.state.areaId)
-    this.fetchUsers();
+    this.analyseData();
   }
-  fetchUsers = () =>{
+  analyseData = () =>{
       let userData= this.state.userData;
-      let userArea= userData.users
+      let totalUsers= userData.users;
       let count= 0;
       let male= 0;
       let female= 0;
       let paidUsers= 0;
-      for( let users of userArea){
+      let matches=0;
+      for( let users of totalUsers){
           if(this.state.areaId === users.area_id){
               count = count + 1;
               if(users.is_pro_user === true){
                   paidUsers= paidUsers+1
+              }
+              if(users.total_matches){
+                  matches=matches+1
               }
               if(users.gender === 'M'){
                   male= male+1
@@ -100,7 +104,13 @@ class Map extends Component {
               }
           }
       }
-      this.setState({ totalUsers: count , totalMale: male, totalFemale: female, totalPaidSubscribers: paidUsers})
+      let genderRatio= male+female
+      let maleRatio= Math.round((male/genderRatio)*100);
+      let femaleRatio= Math.round((female/genderRatio)*100);
+      let subscirbedUsers= Math.round((paidUsers/count)*100);
+      let matchAverage= Math.round(matches/count);
+      let averageUser= Math.round((genderRatio/totalUsers.length)*100);
+      this.setState({ totalUsers: count , totalMale: male, totalFemale: female, totalPaidSubscribers: paidUsers, maleRatio: maleRatio, femaleRatio: femaleRatio, subscirbedUsers: subscirbedUsers, matchAverage: matchAverage, averageUser: averageUser})
       if(paidUsers > 100){
           this.setState({ fillColor: '#00ff00'})
         }
@@ -160,12 +170,19 @@ class Map extends Component {
             onClose={() => this.setState({showPopup: false})}
             anchor="top" 
             dynamicPosition={false}
-            > <div className='areaInfo'>
+            >
+             <div className='areaInfo'>
                 Area Name: {this.state.areaName}<br/>
-                Total Numbers of Users: { this.state.totalUsers}<br/>
-                Total Number of Paid Users: {this.state.totalPaidSubscribers}<br/>
-                Total Numbers of Male Users: { this.state.totalMale}<br/>
-                Total Numbers of Female Users: { this.state.totalFemale}
+                Numbers of Users: { this.state.totalUsers}<br/>
+                Number of Paid Users: {this.state.totalPaidSubscribers}<br/>
+                Numbers of Male Users: { this.state.totalMale}<br/>
+                Numbers of Female Users: { this.state.totalFemale}
+                <span style={{fontSize: '20px'}}>
+                  <br/> {this.state.averageUser} % of total users are from this area.<br/>
+                    {this.state.maleRatio}% users are Male and {this.state.femaleRatio}% users are Female.<br/>
+                    Average match in this area are {this.state.matchAverage}%.<br/>
+                    {this.state.subscirbedUsers}% of {this.state.totalUsers} users are subscirbed.
+                </span>
             </div>
             </Popup>
       }
