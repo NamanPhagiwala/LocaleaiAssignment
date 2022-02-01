@@ -1,0 +1,20 @@
+.container{
+        display: flex;
+    }
+.sideBar{
+        text-align: center;
+    }
+    .mapArea{
+        top: 20%;
+        float: right;
+        border: 5px dotted white;
+        margin: 0 10px 10% 20px;
+    }
+    .header{
+        color: white;
+        margin: 30px ;
+    }
+    .mapboxgl-map{
+        display: block;
+        overflow: none;
+    }
