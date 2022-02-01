@@ -76,7 +76,6 @@ class Map extends Component {
         this.setState({ showError: true})            
         }
     }
-    console.log(this.state.areaId)
     this.analyseData();
   }
   analyseData = () =>{
@@ -87,6 +86,7 @@ class Map extends Component {
       let female= 0;
       let paidUsers= 0;
       let matches=0;
+      console.log(totalUsers.length)
       for( let users of totalUsers){
           if(this.state.areaId === users.area_id){
               count = count + 1;
@@ -109,7 +109,7 @@ class Map extends Component {
       let femaleRatio= Math.round((female/genderRatio)*100);
       let subscirbedUsers= Math.round((paidUsers/count)*100);
       let matchAverage= Math.round(matches/count);
-      let averageUser= Math.round((genderRatio/totalUsers.length)*100);
+      let averageUser= ((genderRatio/totalUsers.length)*100).toPrecision(3);
       this.setState({ totalUsers: count , totalMale: male, totalFemale: female, totalPaidSubscribers: paidUsers, maleRatio: maleRatio, femaleRatio: femaleRatio, subscirbedUsers: subscirbedUsers, matchAverage: matchAverage, averageUser: averageUser})
       if(paidUsers > 100){
           this.setState({ fillColor: '#00ff00'})
@@ -180,7 +180,7 @@ class Map extends Component {
                 <span style={{fontSize: '20px'}}>
                   <br/> {this.state.averageUser} % of total users are from this area.<br/>
                     {this.state.maleRatio}% users are Male and {this.state.femaleRatio}% users are Female.<br/>
-                    Average match in this area are {this.state.matchAverage}%.<br/>
+                    Average match ratio in this area per user is {this.state.matchAverage}<br/>
                     {this.state.subscirbedUsers}% of {this.state.totalUsers} users are subscirbed.
                 </span>
             </div>
