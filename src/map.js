@@ -13,8 +13,8 @@ class Map extends Component {
     super(props)
     this.state = {
       viewport: {
-        width: '60vw',
-        height: '80vh',
+        width: '95vw',
+        height: '85vh',
         latitude: 12.9716,
         longitude: 77.5946,
         zoom: 11
@@ -29,10 +29,10 @@ class Map extends Component {
   }
   componentDidUpdate = (prevProps , prevState)=>{
       if(prevState.userData !== this.state.userData){
-          console.log(this.state.userData)
+          //console.log(this.state.userData)
       }
       if(prevState.polygonData !== this.state.polygonData){
-        console.log('this.state.polygonData')
+      //  console.log('this.state.polygonData')
     }
   }
   static getDerivedStateFromProps = (nextProps, state) => {
@@ -42,7 +42,6 @@ class Map extends Component {
     }
     if(nextProps && nextProps.userReducers && nextProps.userReducers.areaDetails){
         return{ areaId: nextProps.userReducers.areaDetails.features[0].properties.area_id, 
-                areaType: nextProps.userReducers.areaDetails.features[0].geometry.type,  
                 polygonData: nextProps.userReducers.areaDetails.features
             };
     }
@@ -67,10 +66,11 @@ class Map extends Component {
     let polygonData= this.state.polygonData
     var pointInPolygon = require('point-in-polygon');
     var polygon = e.lngLat
+    this.setState({ })
     for(let i=0; i<=100; i++){
     let geoData= polygonData[i].geometry.coordinates[0]
         if(pointInPolygon(polygon, geoData)){
-        this.setState({ areaPoly: polygonData[i].geometry, areaId: polygonData[i].properties.area_id, showDetails: true})
+        this.setState({ areaPoly: polygonData[i].geometry, areaId: polygonData[i].properties.area_id, areaName:polygonData[i].properties.name})
         }
         else{
         this.setState({ showError: true})            
@@ -78,7 +78,6 @@ class Map extends Component {
     }
     console.log(this.state.areaId)
     this.fetchUsers();
-    this.customPopup()
   }
   fetchUsers = () =>{
       let userData= this.state.userData;
@@ -103,36 +102,23 @@ class Map extends Component {
       }
       this.setState({ totalUsers: count , totalMale: male, totalFemale: female, totalPaidSubscribers: paidUsers})
       if(paidUsers > 100){
-          this.setState({ fillColor: 'green'})
+          this.setState({ fillColor: '#00ff00'})
         }
      else if(male > 160){
         this.setState({ fillColor: 'aqua'})
         }
      else if(female > 150){
-        this.setState({ fillColor: 'pink'})
+        this.setState({ fillColor: '#FF0080'})
         }
     else{
         this.setState({fillColor: ''})
     }
   }
-
   render() {
     return (
         <div className="map">
             <div className="header"> Kyupid Analysis by Locale.ae</div>
       <div className="container">
-    { this.state.showDetails ? <div className="sideBar">
-     <h5> Details of users</h5>
-     <span style={{padding: '200px 0', textAlign: 'center'}}>   Area ID: {this.state.areaId}<br/>
-        Total Numbers of Users: { this.state.totalUsers}<br/>
-        Total Number of Paid Users: {this.state.totalPaidSubscribers}<br/>
-        Total Numbers of Male Users: { this.state.totalMale}<br/>
-        Total Numbers of Female Users: { this.state.totalFemale}</span>
-    </div> : 
-    <div className="siderBar" style={{padding: '200px 0'}}>
-        Hover on Map to see details
-    </div>
-    }
     <div className="mapArea">
       <ReactMapGl
         ref={this.mapRef}
@@ -141,6 +127,7 @@ class Map extends Component {
         mapboxApiAccessToken={mapboxToken}
         mapStyle="mapbox://styles/mapbox/streets-v10"
         onHover={(e)=>this.onClickMap(e)}
+        onClick={() => this.setState({showPopup: true})}
         >
         <Source 
                 id="kyupid"
@@ -153,7 +140,7 @@ class Map extends Component {
             source="kyupid"
             paint={{
                 "fill-color": this.state.fillColor ? this.state.fillColor : 'yellow',
-                "fill-opacity": 0.4
+                "fill-opacity": 0.6
             }}/>
         <Layer
             id= 'outline'
@@ -163,7 +150,25 @@ class Map extends Component {
             'line-color': '#000',
             'line-width': 2}}
             />
-        
+      {
+          this.state.showPopup &&  
+          <Popup
+            latitude={0}
+            longitude={0}
+            closeButton={true}
+            closeOnClick={true}
+            onClose={() => this.setState({showPopup: false})}
+            anchor="top" 
+            dynamicPosition={false}
+            > <div className='areaInfo'>
+                Area Name: {this.state.areaName}<br/>
+                Total Numbers of Users: { this.state.totalUsers}<br/>
+                Total Number of Paid Users: {this.state.totalPaidSubscribers}<br/>
+                Total Numbers of Male Users: { this.state.totalMale}<br/>
+                Total Numbers of Female Users: { this.state.totalFemale}
+            </div>
+            </Popup>
+      }
       </ReactMapGl>
       </div>
       </div>
