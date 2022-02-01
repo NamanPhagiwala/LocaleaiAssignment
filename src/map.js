@@ -61,19 +61,16 @@ class Map extends Component {
       ...geocoderDefaultOverrides
     })
   }
-  onClickMap = (e) =>{
+  onMapHover = (e) =>{
     debugger;
     let polygonData= this.state.polygonData
     var pointInPolygon = require('point-in-polygon');
     var polygon = e.lngLat
-    this.setState({ })
+    this.setState({ showPopup: true})
     for(let i=0; i<=100; i++){
     let geoData= polygonData[i].geometry.coordinates[0]
         if(pointInPolygon(polygon, geoData)){
         this.setState({ areaPoly: polygonData[i].geometry, areaId: polygonData[i].properties.area_id, areaName:polygonData[i].properties.name})
-        }
-        else{
-        this.setState({ showError: true})            
         }
     }
     this.analyseData();
@@ -111,18 +108,15 @@ class Map extends Component {
       let matchAverage= Math.round(matches/count);
       let averageUser= ((genderRatio/totalUsers.length)*100).toPrecision(3);
       this.setState({ totalUsers: count , totalMale: male, totalFemale: female, totalPaidSubscribers: paidUsers, maleRatio: maleRatio, femaleRatio: femaleRatio, subscirbedUsers: subscirbedUsers, matchAverage: matchAverage, averageUser: averageUser})
-      if(paidUsers > 100){
+      if(subscirbedUsers > 50){
           this.setState({ fillColor: '#00ff00'})
         }
-     else if(male > 160){
+     else if(maleRatio > 50){
         this.setState({ fillColor: 'aqua'})
         }
-     else if(female > 150){
+     else if(femaleRatio > 50){
         this.setState({ fillColor: '#FF0080'})
         }
-    else{
-        this.setState({fillColor: ''})
-    }
   }
   render() {
     return (
@@ -136,7 +130,7 @@ class Map extends Component {
         onViewportChange={viewport => this.setState({viewport})}
         mapboxApiAccessToken={mapboxToken}
         mapStyle="mapbox://styles/mapbox/streets-v10"
-        onHover={(e)=>this.onClickMap(e)}
+        onHover={(e)=>this.onMapHover(e)}
         onClick={() => this.setState({showPopup: true})}
         >
         <Source 
@@ -163,13 +157,9 @@ class Map extends Component {
       {
           this.state.showPopup &&  
           <Popup
+            className="analysedData"
             latitude={0}
             longitude={0}
-            closeButton={true}
-            closeOnClick={true}
-            onClose={() => this.setState({showPopup: false})}
-            anchor="top" 
-            dynamicPosition={false}
             >
              <div className='areaInfo'>
                 Area Name: {this.state.areaName}<br/>
@@ -181,11 +171,22 @@ class Map extends Component {
                   <br/> {this.state.averageUser} % of total users are from this area.<br/>
                     {this.state.maleRatio}% users are Male and {this.state.femaleRatio}% users are Female.<br/>
                     Average match ratio in this area per user is {this.state.matchAverage}<br/>
-                    {this.state.subscirbedUsers}% of {this.state.totalUsers} users are subscirbed.
+                    {this.state.subscirbedUsers}% of {this.state.totalUsers} users are subscribed.
                 </span>
             </div>
             </Popup>
       }
+      <Popup
+      latitude={0}
+      longitude={0}
+      closeButton={false}
+      className='infoPop'>
+          <div style={{color: 'black', fontSize: '15px'}}>
+          Green: More than 50% Users are subscribed<br/>
+          Pink: More than 50% Users are Female<br/>
+          Blue: More than 50% Users are Male<br/>
+          </div>
+      </Popup>
       </ReactMapGl>
       </div>
       </div>

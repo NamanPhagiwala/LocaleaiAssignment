@@ -18,7 +18,7 @@
         display: block;
         overflow: none;
     }
-    .mapboxgl-popup{
+    .analysedData{
         transform:none !important;
          top: 15%;
         left: 10px;
@@ -26,7 +26,7 @@
     }
     .mapboxgl-popup-content{
         max-width: 60%;
-        font-size: 25px;
+        font-size: 22px;
     }
     .mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
     .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
@@ -42,4 +42,11 @@
     .areaInfo{
         color: black;
         background-color: rgb(249, 250, 250);
+    }
+    .infoPop{
+        padding-top: 25px;
+        right: 5px;
+        transform: none !important;
+        flex-direction: unset !important;
+        left: unset;
     }
