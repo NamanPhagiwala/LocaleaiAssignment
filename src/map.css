@@ -1,23 +1,47 @@
 .container{
-        display: flex;
-    }
-.sideBar{
-        text-align: center;
+        
+}
+.sidebar{
+    background-color: lightyellow;
+    left: 3%;
+    font-size: 23px;
+    position: absolute;
+    top: 15%;
+    height: 75vh;
+    max-width: 24%;
+    min-width: 24%;
+    line-height: 40px;
+    color: olive;
+    padding-right: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
     .mapArea{
-        top: 20%;
+        top: 15%;
         float: right;
         border: 5px solid white;
         margin: 0 10px 10% 20px;
+        border:none;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
     .header{
-        color: white;
+        text-align: center;
+        padding: 20px;
+        color: black;
         margin: 30px ;
+        margin-bottom: 15px;
+        position: absolute;
+        top: 5px;
+        left:25%;
+        color: olive;
+        right: 25%;
+        margin-top: 0px;
+        font-size: 50px;
+        font-weight: 600;
     }
-    .mapboxgl-map{
-        display: block;
-        overflow: none;
-    }
+    .right {
+        position: absolute;
+        right: 0px;
+      }
     .analysedData{
         transform:none !important;
          top: 15%;
