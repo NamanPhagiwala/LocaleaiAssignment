@@ -1,8 +1,5 @@
-.container{
-        
-}
 .sidebar{
-    background-color: lightyellow;
+    background-color: #ffffe0;
     left: 3%;
     font-size: 23px;
     position: absolute;
@@ -18,7 +15,7 @@
     .mapArea{
         top: 15%;
         float: right;
-        border: 5px solid white;
+        border: 5px solid #FFFFFF;
         margin: 0 10px 10% 20px;
         border:none;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -26,13 +23,13 @@
     .header{
         text-align: center;
         padding: 20px;
-        color: black;
+        color: #000000;
         margin: 30px ;
         margin-bottom: 15px;
         position: absolute;
         top: 5px;
         left:25%;
-        color: olive;
+        color: #808000;
         right: 25%;
         margin-top: 0px;
         font-size: 50px;
@@ -46,7 +43,7 @@
         transform:none !important;
          top: 15%;
         left: 10px;
-        border-color: grey;
+        border-color: #808080;
     }
     .mapboxgl-popup-content{
         max-width: 60%;
@@ -64,7 +61,7 @@
         display:none !important;
     }
     .areaInfo{
-        color: black;
+        color: #000000;
         background-color: rgb(249, 250, 250);
     }
     .infoPop{

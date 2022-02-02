@@ -109,7 +109,7 @@ class Map extends Component {
           this.setState({ fillColor: '#00ff00'})
         }
      else if(maleRatio > 50){
-        this.setState({ fillColor: 'aqua'})
+        this.setState({ fillColor: '#00FFFF'})
         }
      else if(femaleRatio > 50){
         this.setState({ fillColor: '#FF0080'})
@@ -118,7 +118,7 @@ class Map extends Component {
   render() {
     return (
         <div className="map">
-            <div className="header"><u> Kyupid Analysis by Locale.ae</u></div>
+            <div className="header"><u> Kyupid Analysis by Locale.ai</u></div>
       <div className="container">
           <div className='sidebar'>
                 <h1> Analysed Data</h1>
@@ -159,7 +159,7 @@ class Map extends Component {
             type="fill"
             source="kyupid"
             paint={{
-                "fill-color": this.state.fillColor ? this.state.fillColor : 'yellow',
+                "fill-color": this.state.fillColor ? this.state.fillColor : '#FFFF00',
                 "fill-opacity": 0.6
             }}/>
         <Layer
@@ -175,7 +175,7 @@ class Map extends Component {
       longitude={0}
       closeButton={false}
       className='infoPop'>
-          <div style={{color: 'black', fontSize: '15px'}}>
+          <div style={{color: '#000000', fontSize: '15px'}}>
           Green: More than 50% Users are subscribed<br/>
           Pink: More than 50% Users are Female<br/>
           Blue: More than 50% Users are Male<br/>
