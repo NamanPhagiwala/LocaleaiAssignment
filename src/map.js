@@ -197,4 +197,5 @@ const mapStateToProps = state => ({
  	getUserData: (data) => dispatch(getUserData(data)),
     getAreaDetails: (data) => dispatch(getAreaDetails(data))
  })
+ 
 export default connect(mapStateToProps , mapDispatchToProps)(Map);
